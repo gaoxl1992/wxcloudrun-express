@@ -109,6 +109,37 @@ curl https://<云托管服务域名>/api/count
 curl -X POST -H 'content-type: application/json' -d '{"action": "inc"}' https://<云托管服务域名>/api/count
 ```
 
+## 用户与关系人 API（家族手册小程序）
+
+以下接口需通过小程序 `wx.cloud.callContainer` 调用，请求头会自动注入 `X-WX-OPENID` 用于用户身份识别。
+
+| 接口 | 方法 | 说明 |
+|------|------|------|
+| `/api/user/login` | POST | 用户登录/注册，确保用户记录存在 |
+| `/api/persons` | GET | 获取当前用户所有关系人 |
+| `/api/persons` | POST | 新增关系人 |
+| `/api/persons/:id` | GET | 获取单个关系人 |
+| `/api/persons/:id` | PUT | 更新关系人 |
+| `/api/persons/:id` | DELETE | 删除关系人 |
+| `/api/persons/sync` | POST | 全量同步（用本地 persons 覆盖云端） |
+
+### 关系人数据结构
+
+```json
+{
+  "id": "mom_bro_1",
+  "path": ["妈妈", "哥哥"],
+  "pathLabel": "妈妈的哥哥",
+  "name": "舅舅",
+  "rank": 1,
+  "status": "living",
+  "maritalStatus": "married",
+  "photoPath": "",
+  "traits": "",
+  "contact": ""
+}
+```
+
 ## 使用注意
 如果不是通过微信云托管控制台部署模板代码，而是自行复制/下载模板代码后，手动新建一个服务并部署，需要在「服务设置」中补全以下环境变量，才可正常使用，否则会引发无法连接数据库，进而导致部署失败。
 - MYSQL_ADDRESS
