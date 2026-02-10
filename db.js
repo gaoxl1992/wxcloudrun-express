@@ -103,8 +103,8 @@ Person.belongsTo(User, { foreignKey: "openid" });
 
 async function init() {
   await Counter.sync({ alter: true });
-  await User.sync({ alter: true });
-  await Person.sync({ alter: true });
+  await User.sync();
+  await Person.sync();
 }
 
 module.exports = {
