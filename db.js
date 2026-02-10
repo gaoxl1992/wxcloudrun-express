@@ -98,8 +98,9 @@ const Person = sequelize.define("Person", {
   updatedAt: "updatedAt",
 });
 
-User.hasMany(Person, { foreignKey: "openid" });
-Person.belongsTo(User, { foreignKey: "openid" });
+// 仅逻辑关联，不建 DB 外键，避免建表时兼容性问题
+User.hasMany(Person, { foreignKey: "openid", sourceKey: "openid", constraints: false });
+Person.belongsTo(User, { foreignKey: "openid", targetKey: "openid", constraints: false });
 
 async function init() {
   await Counter.sync({ alter: true });
